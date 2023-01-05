@@ -15,7 +15,13 @@ class IncidentReport(models.Model):
     suspected_cause = models.TextField(null=True)
     immediate_action = models.TextField(null=True)
 
+    def __str__(self):
+        return self.user.username
+
 
 class SubIncidentTypes(models.Model):
     typeof = models.ForeignKey(IncidentReport, on_delete=models.CASCADE)
     type = models.CharField(max_length=225)
+
+    def __str__(self):
+        return self.typeof.location
