@@ -1,16 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 
 def home(request):
+
     print('hii')
     return render(request, 'index.html')
 
 
 def login(request):
+    if 'username' in request.session:
+        return redirect(home)
+
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -25,6 +30,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, 'You have succesfully logged in')
+            request.session['username'] = username
             return redirect(home)
         else:
             messages.error(request, "Invalid Credentials")
@@ -33,6 +39,8 @@ def login(request):
 
 
 def signup(request):
+    if 'username' in request.session:
+        return redirect(home)
     if request.method == 'POST':
         password1 = request.POST["password1"]
         if password1 != "":
@@ -61,4 +69,5 @@ def signup(request):
 
 def logout(request):
     auth.logout(request)
+    request.session.flush()
     return redirect(home)
