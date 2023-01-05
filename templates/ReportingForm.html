@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+
+<div class="page-wrapper">
+
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-7 align-self-center">
+                <h2 class="page-title text-truncate text-dark font-weight-medium mb-1">New Master Incident</h2>
+                <div class="d-flex align-items-center">
+
+                </div>
+            </div>
+            <div class="col-5 align-self-center">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="col-12">
+            <div class="card">
+                {% if user.is_authenticated %}
+                <div class="card-body">
+                    <h4>Initial Reporting</h4>
+                    {% if messages %}
+                    {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="mt-4 alert alert-danger" role="alert">
+                        <i class="dripicons-wrong mr-2"></i>
+                        {{message}}
+                    </div>
+                    {% else%}
+                    <div class="mt-4 alert alert-success" role="alert">
+                        <i class="dripicons-checkmark mr-2"></i>
+                        {{message}}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    <form action="{% url 'submit_form' %}" method="POST" class="mt-2">
+                        {% csrf_token %}
+                        <div class="col-12 ">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <div class="form-group row">
+                                        <label for="inputHorizontalSuccess"
+                                            class="col-3 col-form-label">Location</label>
+                                        <div class="col-5">
+                                            <select name="location" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                <option value="Corporate Headoffice" selected>Corporate Headoffice</option>
+                                                <option value="Operation Department">Operation Department</option>
+                                                <option value="Work Station">Work Station</option>
+                                                <option value="Marketing Division">Marketing Division</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group row">
+
+                                        <label for="inputHorizontalSuccess"
+                                            class="col-3 col-form-label">Incident Department</label>
+                                        <div class="col-5">
+                                            <textarea name="department" class="form-control" rows="3"></textarea>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+
+                                        <label for="inputHorizontalSuccess" class="col-3 col-form-label">Date & Time of Incident</label>
+                                        <div class="col-5">
+                                            <input type="date" name="date" class="form-control" >
+                                            <input type="time" name="time" class="form-control" >
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+
+                                        <label for="inputHorizontalSuccess" class="col-3 col-form-label">Incident Location</label>
+                                        <div class="col-5">
+                                            <textarea name="incident_location" class="form-control" rows="3"></textarea>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+
+                                        <label for="inputHorizontalSuccess" class="col-3 col-form-label">Initial Severity</label>
+                                        <div class="col-5">
+                                            <select name="initial_severity" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                <option value="Mild" selected>Mild</option>
+                                                <option value="Moderate">Moderate</option>
+                                                <option value="Severe">Severe</option>
+                                                <option value="Fatal">Fatal</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+
+                                        <label for="inputHorizontalSuccess" class="col-3 col-form-label">Suspected Cause</label>
+                                        <div class="col-5">
+                                            <textarea name="suspected_cause" class="form-control" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+
+                                        <label for="inputHorizontalSuccess" class="col-3 col-form-label">Immediate Action Taken</label>
+                                        <div class="col-5">
+                                            <textarea name="immediate_action" class="form-control" rows="3"></textarea>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+
+                                        <label for="inputHorizontalSuccess" class="col-3 col-form-label">Sub Incident Types</label>
+                                        <div class="col-5">
+                                            <div class="form-check form-check-inline">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input name="sub_incident_type" type="checkbox" value="Environmental Incident"  class="custom-control-input" id="customCheck1">
+                                                    <label class="custom-control-label" for="customCheck1">Environmental Incident</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input name="sub_incident_type" type="checkbox" value="Injury Or Illness" class="custom-control-input" id="customCheck2">
+                                                    <label class="custom-control-label" for="customCheck2">Injury/Illness</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input name="sub_incident_type" type="checkbox" value="Property Damage" class="custom-control-input" id="customCheck3"
+                                                        >
+                                                    <label class="custom-control-label" for="customCheck3">Property Damage</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input name="sub_incident_type" type="checkbox" value="Vehicle" class="custom-control-input" id="customCheck4"
+                                                        >
+                                                    <label class="custom-control-label" for="customCheck4">Vehicle</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+
+                                        <label for="inputHorizontalSuccess" class="col-3 col-form-label">Reported By</label>
+                                        <div class="col-5">
+                                            <h3>{{user.username}}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="btn-list">
+                                    <a href="{% url 'home' %}" type="button" class="btn btn-secondary float-right">
+                                        Cancel</a>
+                                    <button type="submit" class="btn btn-primary float-right">
+                                        Save</button>
+                                    </div>
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                {% else %}
+                <div class="card-body">
+                  
+                    <h4>You Need to Login to view the Form</h4>
+                    
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+
+
+    </div>
+    {% endblock %}
